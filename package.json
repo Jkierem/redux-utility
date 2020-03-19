@@ -1,0 +1,75 @@
+{
+  "name": "redux-utility",
+  "version": "1.0.0",
+  "main": "./dist/cjs/redux-utility.cjs.js",
+  "module": "./dist/esm/redux-utility.esm.js",
+  "browser": "./dist/umd/redux-utility.umd.js",
+  "license": "MIT",
+  "author": {
+    "name": "Juan Miguel Gomez",
+    "email": "juanmiguelgomez8@gmail.com"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jkierem/redux-utility"
+  },
+  "files": [
+    "dist",
+    "types"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "test": "rm -rf ./coverage && jest --coverage --verbose",
+    "test:watch": "jest --verbose --watch",
+    "prepublish": "yarn build"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-react": "^7.8.3",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "babel-jest": "^25.1.0",
+    "babel-loader": "^8.0.6",
+    "jest": "^25.1.0",
+    "rollup": "^2.1.0",
+    "rollup-plugin-babel": "^4.4.0",
+    "sinon": "^9.0.1"
+  },
+  "jest": {
+    "verbose": true,
+    "collectCoverageFrom": [
+      "src/*.{js,jsx}"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/?(*.)test.{js,jsx}"
+    ],
+    "testEnvironment": "node",
+    "transform": {
+      ".js$": "babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "jsx"
+    ]
+  },
+  "types": "types/index.d.ts",
+  "dependencies": {
+    "ramda": "^0.27.0",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-redux": "^7.2.0",
+    "rxjs": "^6.5.4"
+  }
+}
