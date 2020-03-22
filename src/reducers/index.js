@@ -1,8 +1,11 @@
 import { propOr, identity, compose, fromPairs } from "ramda";
 
+const defaultCase = propOr(identity,"default")
+const actionType =  propOr("","type")
+
 export const createReducer = obj => (prevState={}, action) => propOr(
-    propOr(identity,"default",obj),
-    action.type,
+    defaultCase(obj),
+    actionType(action),
     obj
 )(prevState,action)
 
