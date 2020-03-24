@@ -17,6 +17,7 @@ The library is divided into 4 exported objects:
 - Actions
 - Hooks
 - Reducers
+- Redux
 - Observable
 
 Each export represents a set of utility functions
@@ -172,6 +173,33 @@ const inc = nullaryActionCreator(INC)
 reducer(5,dec()) // returns 4
 reducer(5,inc()) // returns 6
 reducer(5, {type: "anything"}) // returns 5
+```
+
+### Redux
+
+Contains general redux utilities
+
+```javascript
+import { Redux } from 'redux-utility'
+
+const {
+    getDevtoolsCompose
+} = Redux
+```
+
+#### getDevtoolsCompose
+
+Returns the redux devtools compose if it exist. Otherwise returns redux compose. The function may receive an argument that when false, forces the function to return redux's compose. This could be a function or a boolean value. Common usage:
+
+```javascript
+const shouldUseDevtool = () => process.env.NODE_ENV === "development"
+const composeEnhancers = getDevtoolsCompose(shouldUseDevtool)
+
+const store = createStore(
+    reducer,
+    initialState,
+    composeEnhancers(...enhancers)
+)
 ```
 
 ### Observable

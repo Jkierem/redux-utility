@@ -1,4 +1,5 @@
 export * as Actions from './actions'
 export * as Hooks from './hooks'
 export * as Reducers from './reducers'
+export * as Redux from './redux'
 export * as Observable from './rxjs'
