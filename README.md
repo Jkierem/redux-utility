@@ -10,9 +10,25 @@ yarn add redux-utility
 npm install redux-utility
 ```
 
+## Migration from 1.x to 2.x
+
+Since exports were reorganized, all that is needed is to update exports. Change this
+
+```javascript
+import { Reducers } from 'redux-utility'
+
+const { createReducer } = Reducers;
+```
+
+to
+
+```javascript
+import { createReducer } from 'redux-utility'
+```
+
 ## Usage
 
-The library is divided into 4 exported objects:
+The functions in the library are divided into 4 categories:
 
 - Actions
 - Hooks
@@ -20,20 +36,19 @@ The library is divided into 4 exported objects:
 - Redux
 - Observable
 
-Each export represents a set of utility functions
+Every function inside each module is exported as a named export. A plan for rxjs like imports is on the way
 
 ### Actions
 
 The Actions object contains functions for creating action creators.
 
 ```javascript
-import { Actions } from 'redux-utility'
-const { 
+import { 
     nullaryAction,
     unaryActionCreator,
     nAryActionCreator,
     shape
-} = Actions
+} from 'redux-utility'
 ```
 
 #### nullaryActionCreator
@@ -78,9 +93,9 @@ withAB(20,22) // returns { type: "ADD" , payload: { a: 20, b: 22 } }
 ### Hooks
 
 ```javascript
-import { Hooks } from 'redux-utility'
-
-const { usePathSelector } = Hooks
+import { 
+    usePathSelector 
+} from 'redux-utility'
 ```
 
 #### usePathSelector
@@ -100,13 +115,11 @@ usePathSelector("a.b.d",50) // returns 50
 Contains various functions that create reducers through different styles
 
 ```javascript
-import { Reducers } from 'redux-utility'
-
-const { 
+import { 
     createReducer,
     createPairsReducer, 
     createEventReducer  
-} = Reducers
+} from 'redux-utility'
 ```
 
 #### createReducer
@@ -180,11 +193,9 @@ reducer(5, {type: "anything"}) // returns 5
 Contains general redux utilities
 
 ```javascript
-import { Redux } from 'redux-utility'
-
-const {
+import {
     getDevtoolsCompose
-} = Redux
+} from 'redux-utility'
 ```
 
 #### getDevtoolsCompose
@@ -207,12 +218,10 @@ const store = createStore(
 Contains utilities to use with redux-observable
 
 ```javascript
-import { Observable } from 'redux-utility'
-
-const {
+import {
     fromActions,
     fromActionsEager
-} = Observable
+} from 'redux-utility'
 ```
 
 #### fromActions
