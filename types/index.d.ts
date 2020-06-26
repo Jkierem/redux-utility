@@ -15,6 +15,20 @@ declare module "redux-utility" {
     type ReducerArray<A> = [string, (state: A, action: Action) => A][]
     type ReducerSetup<A> = (eventEmitter: EventReducer<A>) => void
 
+    type AsyncModule = {
+        (state: any, action: Action): any;
+        config: ReducerConfig<any>;
+        pairs: ReducerArray<any>;
+        register: ReducerSetup<any>;
+        intialState: any;
+        actions: {
+            [key: string]: () => Action
+        };
+        constants: {
+            [key: string]: string
+        }
+    };
+
     export function nullaryActionCreator(type: string): () => NullaryAction;
     export function unaryActionCreator(type: string): (data:any) => Action;
     export function nAryActionCreator(type: string, payloadFn:(...args: any[]) => any): (...args: any[]) => Action
@@ -32,4 +46,6 @@ declare module "redux-utility" {
 
     export function fromActions(...creators: (Action | ActionCreator)[]): (...data: any[]) => Observable<Action>;
     export function fromActionsEager(...creators: (Action | ActionCreator)[]): Observable<Action>;
+
+    export function createAsyncState(namespace: string, options: { nested: boolean }): AsyncModule;
 }

@@ -28,13 +28,14 @@ import { createReducer } from 'redux-utility'
 
 ## Usage
 
-The functions in the library are divided into 4 categories:
+The functions in the library are divided into 6 categories:
 
 - Actions
 - Hooks
 - Reducers
 - Redux
 - Observable
+- Modules
 
 Every function inside each module is exported as a named export. A plan for rxjs like imports is on the way
 
@@ -285,4 +286,96 @@ const epic = actions$ => actions$.pipe(
         ) // returns the same as fromActionsEager( inc, dec )
     )
 )
+```
+
+### Modules
+
+Contains common use cases ready to be used. Currently contains:
+
+- createAsyncState
+
+#### createAsyncState
+
+Common pattern for async state. creates a fetch, success, and error action with their respective constants, reducer function, reducer config, reducer register function, reducer pairs config and reducer initial state. The common usage is as follows:
+
+```javascript
+import { createAsyncState } from 'redux-utility';
+
+// Basic usage
+// receives a key for namespacing the constants. The constants will be prefixed with the key
+const reducer = createAsyncState("user");
+
+// optionally, if you want the state to be nested inside the key provided
+const nested = createAsyncState("user",{ nested: true });
+
+export default reducer;
+
+export const {
+    fetch: FETCH_USER,
+    success: USER_SUCCESS,
+    error: USER_ERROR
+} = reducer.constants;
+
+export const {
+    fetch: fetchUser,
+    success: userSuccess,
+    error: userError
+} = reducer.actions;
+
+// more options added for flexibility
+
+createReducer(reducer.config);
+createPairsReducer(reducer.pairs);
+createEventReducer(reducer.register);
+
+// mixing with other pieces of state
+
+const OTHER = "OTHER";
+createReducer({
+    ...reducer.config,
+    [OTHER]: (state) => ({ ...state, other: true }),
+})
+createPairsReducer([
+    ...reducer.pairs,
+    [OTHER, (state) => ({ ...state, other: true })]
+])
+createEventReducer((handler) => {
+    reducer.register(handler);
+    handler.on(OTHER,(state) => ({ ...state, other: true }))
+})
+
+// this are the possible states
+
+const initialState = reducer.initialState
+
+// {
+//     loading: false,
+//     data: undefined,
+//     error: undefined
+// }
+
+dispatch(fetchUser())
+
+// {
+//     loading: true,
+//     data: undefined,
+//     error: undefined
+// }
+
+dispatch(userSuccess({ name: "User" }))
+
+// {
+//     loading: false,
+//     data: { name: "user" },
+//     error: undefined
+// }
+
+dispatch(userError("Something went wrong"))
+
+// {
+//     loading: false,
+//     data: undefined,
+//     error: "Something went wrong"
+// }
+
 ```
