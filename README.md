@@ -296,7 +296,7 @@ Contains common use cases ready to be used. Currently contains:
 
 #### createAsyncState
 
-Common pattern for async state. creates a fetch, success, and error action with their respective constants, reducer function, reducer config, reducer register function, reducer pairs config and reducer initial state. The common usage is as follows:
+Common pattern for async state. creates a fetch, success, and error action with their respective constants, reducer function, reducer config, reducer register function, reducer pairs config and reducer initial state. The usage is as follows:
 
 ```javascript
 import { createAsyncState } from 'redux-utility';
@@ -342,6 +342,28 @@ createPairsReducer([
 createEventReducer((handler) => {
     reducer.register(handler);
     handler.on(OTHER,(state) => ({ ...state, other: true }))
+})
+
+// extension of reducer
+
+const async = createAsyncState("auth")
+const extendedReducer = async.extend({
+    success: (state,action) => {
+        return {
+            ...state,
+            authenticated: true
+        }
+    }
+})
+
+// or the long way around
+const extended = createReducer({
+    [aync.constants.success]: async.extend.success((state,action) => {
+        return {
+            ...state,
+            authenticated: true
+        }
+    }),
 })
 
 // this are the possible states

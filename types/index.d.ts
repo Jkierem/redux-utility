@@ -1,4 +1,5 @@
 import { Observable } from "rxjs";
+import { Reduced } from "ramda";
 
 declare module "redux-utility" {
     type Extractable<T> =  T | (() => T);
@@ -15,18 +16,31 @@ declare module "redux-utility" {
     type ReducerArray<A> = [string, (state: A, action: Action) => A][]
     type ReducerSetup<A> = (eventEmitter: EventReducer<A>) => void
 
+    type AsyncState = {
+        loading: boolean;
+        data: any;
+        error: any;
+    } | {
+        [x: string]: AsyncState;
+    }
     type AsyncModule = {
-        (state: any, action: Action): any;
-        config: ReducerConfig<any>;
-        pairs: ReducerArray<any>;
-        register: ReducerSetup<any>;
-        intialState: any;
+        (state: AsyncState, action: Action): AsyncState;
+        config: ReducerConfig<AsyncState>;
+        pairs: ReducerArray<AsyncState>;
+        register: ReducerSetup<AsyncState>;
+        intialState: AsyncState;
         actions: {
-            [key: string]: () => Action
+            [key: string]: ActionCreator;
         };
         constants: {
-            [key: string]: string
+            [key: string]: string;
         }
+        extend: {
+            (config: ReducerConfig<AsyncState>): Reducer<AsyncState>;
+            fetch: (fn: Function) => Reducer<AsyncState>;
+            success: (fn: Function) => Reducer<AsyncState>;
+            error: (fn: Function) => Reducer<AsyncState>;
+        };
     };
 
     export function nullaryActionCreator(type: string): () => NullaryAction;
