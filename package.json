@@ -1,6 +1,6 @@
 {
   "name": "redux-utility",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "main": "./dist/cjs/redux-utility.cjs.js",
   "module": "./dist/esm/redux-utility.esm.js",
   "browser": "./dist/umd/redux-utility.umd.js",
