@@ -1,29 +1,34 @@
 import { Observable } from "rxjs";
 
 declare module "redux-utility" {
-    type Extractable<T> =  T | (() => T);
-    type NullaryAction = { type: string };
-    type Action = { type: string, payload?: any };
-    type ActionCreator = (...args: any[]) => Action;
-    type Reducer<A> = (state: A , action: Action) => A
-    interface EventReducer<A> {
+    export type Extractable<T> =  T | (() => T);
+    export type NullaryAction = { type: string };
+    export type Action = { type: string, payload?: any };
+    export type ActionCreator = (...args: any[]) => Action;
+    export type Reducer<A> = (state: A , action: Action) => A
+    export interface EventReducer<A> {
         on: (event: String, callback: Reducer<A>) => void
     }
-    interface ReducerConfig<A> {
+    export interface ReducerConfig<A> {
         [x: string]: Reducer<A>
     }
-    type ReducerArray<A> = [string, (state: A, action: Action) => A][]
-    type ReducerSetup<A> = (eventEmitter: EventReducer<A>) => void
+    export type ReducerArray<A> = [string, (state: A, action: Action) => A][]
+    export type ReducerSetup<A> = (eventEmitter: EventReducer<A>) => void
 
-    type AsyncState = {
+    export type AsyncState = FlatAsyncState | NestedAsyncState;
+
+    export type FlatAsyncState = {
         loading: boolean;
         data: any;
         error: any;
         [x: string]: any
-    } | {
+    }
+
+    export type NestedAsyncState = {
         [x: string]: AsyncState;
     }
-    type AsyncModule = {
+
+    export type AsyncModule = {
         (state: AsyncState, action: Action): AsyncState;
         config: ReducerConfig<AsyncState>;
         pairs: ReducerArray<AsyncState>;
