@@ -15,17 +15,11 @@ declare module "redux-utility" {
     export type ReducerArray<A> = [string, (state: A, action: Action) => A][]
     export type ReducerSetup<A> = (eventEmitter: EventReducer<A>) => void
 
-    export type AsyncState = FlatAsyncState | NestedAsyncState;
-
-    export type FlatAsyncState = {
+    export type AsyncState = {
         loading: boolean;
         data: any;
         error: any;
         [x: string]: any
-    }
-
-    export type NestedAsyncState = {
-        [x: string]: AsyncState;
     }
 
     export type AsyncModule = {
