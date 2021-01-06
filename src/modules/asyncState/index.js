@@ -59,7 +59,7 @@ const propOrIdentity = propOr(identity)
 export const createAsyncState = (ns, options) => {
     const NS = ns.toUpperCase()
 
-    const initalState = init(ns,nested(options))
+    const initialState = init(ns,nested(options))
 
     const constants = {
         fetch: `${NS}_FETCH`,
@@ -102,7 +102,7 @@ export const createAsyncState = (ns, options) => {
     }
 
     const reducer = createReducer(config)
-    reducer.initalState = initalState;
+    reducer.initialState = initialState;
     reducer.constants = constants;
     reducer.register = register;
     reducer.actions = actions;

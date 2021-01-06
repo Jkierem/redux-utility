@@ -1,5 +1,4 @@
 import { Observable } from "rxjs";
-import { Reduced } from "ramda";
 
 declare module "redux-utility" {
     type Extractable<T> =  T | (() => T);
@@ -48,7 +47,8 @@ declare module "redux-utility" {
     export function nAryActionCreator(type: string, payloadFn:(...args: any[]) => any): (...args: any[]) => Action
     export function shape(...keys: string[]) : (...values: any[]) => any;
     
-    export function usePathSelector<T>(path:string, or:T): T;
+    export function usePathSelector(path:string): any;
+    export function usePathSelectorOr<T>(path:string, or: T): T;
 
     
     export function createReducer<A>(obj: ReducerConfig<A>): Reducer<A>;
@@ -56,7 +56,7 @@ declare module "redux-utility" {
     export function createEventReducer<A>(emitter: ReducerSetup<A>): Reducer<A>;
     
 
-    export function getDevtoolsCompose(val: T | (() => T)): any;
+    export function getDevtoolsCompose(val: boolean | (() => boolean)): any;
 
     export function fromActions(...creators: (Action | ActionCreator)[]): (...data: any[]) => Observable<Action>;
     export function fromActionsEager(...creators: (Action | ActionCreator)[]): Observable<Action>;
